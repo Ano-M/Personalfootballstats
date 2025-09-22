@@ -72,20 +72,3 @@ class User:
                 return user
         print("Login failed!\n")
         return None
-
-while True:
-    print("********** Login System **********")
-    print("1.Signup")
-    print("2.Login")
-    print("3.Submit stats")
-    ch = int(input("Enter your choice: "))
-    if ch == 1:
-        user = User("John", "Doe", "email@domain.com", 21, "M")
-        user.signup()
-    elif ch == 2:
-        user = User("", "", "", "", "")
-        user.login()
-    elif ch == 3:
-        break
-    else:
-        print("Wrong Choice!")
