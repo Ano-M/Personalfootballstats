@@ -1,5 +1,9 @@
 import hashlib
 import json
+import os
+
+from typing_extensions import reveal_type
+
 
 class User:
     def __init__(self, first_name, last_name, email, age, gender):
@@ -17,15 +21,17 @@ class User:
     @staticmethod
     def load_users():
         try:
+            if not os.path.exists("users.json") or os.stat("users.json").st_size == 0:
+                return []
             with open("users.json", "r") as f:
                 return json.load(f)
-        except FileNotFoundError:
+        except (FileNotFoundError, json.JSONDecodeError):
             return []
 
     @staticmethod
     def save_users(users):
         with open("users.json", "w") as f:
-            json.dump(users, f)
+            json.dump(users, f, indent=4)
 
     def signup(self):
         email = input("Enter email address: ")
