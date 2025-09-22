@@ -1,9 +1,11 @@
 import json
 import os
+from user import User
+
 
 class StatsSubmission:
-    def __init__(self, playerId, date, goals, assists):
-        self.playerId = playerId
+    def __init__(self, user_email, date, goals, assists):
+        self.user_email = user_email
         self.date = date
         self.goals = goals
         self.assists = assists
@@ -24,22 +26,25 @@ class StatsSubmission:
             json.dump(StatsSubmission, f, indent=4)
 
     def get_stats(self):
-        playerId = input("Player ID: ")
         goals = input("Enter goals scored: ")
         assists = input("Enter assists given: ")
         date = input("Enter match date: ")
 
         stats = StatsSubmission.load_stats()
         stats.append({
-            "playerId": playerId,
+            "user_email": self.user_email,
             "goals": goals,
             "assists": assists,
             "date": date,
         })
         StatsSubmission.save_stats(stats)
-        return playerId, goals, assists, date
+        return goals, assists, date
 
 if __name__ == "__main__":
-    sub = StatsSubmission("", "", "", "")
-    playerId, goals, assists, date = sub.get_stats()
-    print(f"Stats entered: Goals={goals}, Assists={assists}, Date={date}")
+    user = User("", "", "", "", "")
+    logged_in_user = user.login()
+
+    if logged_in_user:
+        sub = StatsSubmission(logged_in_user["email"], "", "", "")
+        goals, assists, date = sub.get_stats()
+        print(f"Stats entered: Goals={goals}, Assists={assists}, Date={date}")

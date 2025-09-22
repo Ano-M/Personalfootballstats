@@ -69,21 +69,22 @@ class User:
         for user in users:
             if user["email"] == email and user["password_hash"] == hash1:
                 print("Logged in Successfully!")
-                return
+                return user
         print("Login failed!\n")
+        return None
 
 while True:
     print("********** Login System **********")
     print("1.Signup")
     print("2.Login")
-    print("3.Exit")
+    print("3.Submit stats")
     ch = int(input("Enter your choice: "))
     if ch == 1:
-        u = User("John", "Doe", "email@domain.com", 21, "M")
-        u.signup()
+        user = User("John", "Doe", "email@domain.com", 21, "M")
+        user.signup()
     elif ch == 2:
-        u = User("", "", "", "", "")
-        u.login()
+        user = User("", "", "", "", "")
+        user.login()
     elif ch == 3:
         break
     else:
