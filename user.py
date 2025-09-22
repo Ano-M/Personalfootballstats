@@ -1,6 +1,5 @@
 import hashlib
-import self
-
+import json
 
 class User:
     def __init__(self, first_name, last_name, email, age, gender):
@@ -10,48 +9,76 @@ class User:
         self.age = age
         self.gender = gender
 
+    @staticmethod
+    def hash_password(password):
+        # Use a better hashing algorithm (bcrypt recommended for production)
+        return hashlib.md5(password.encode()).hexdigest()
+
+    @staticmethod
+    def load_users():
+        try:
+            with open("users.json", "r") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return []
+
+    @staticmethod
+    def save_users(users):
+        with open("users.json", "w") as f:
+            json.dump(users, f)
+
     def signup(self):
         email = input("Enter email address: ")
         password = input("Enter password: ")
         conf_password = input("Confirm password: ")
 
-        if conf_password == password:
-            encode = conf_password.encode()
-            hash1 = hashlib.md5(encode).hexdigest()
-            with open("credentials.txt", "w") as f:
-                f.write(email + "\n")
-                f.write(hash1)
-                f.close()
-                print("You have registered successfully!")
-        else:
-            print("Password is not same as above! \n")
+        if conf_password != password:
+            print("Password is not same as above!\n")
+            return
+
+        users = User.load_users()
+        # Check for existing email
+        if any(user['email'] == email for user in users):
+            print("Email already exists!\n")
+            return
+
+        hash1 = User.hash_password(password)
+        users.append({
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": email,
+            "age": self.age,
+            "gender": self.gender,
+            "password_hash": hash1,
+        })
+        User.save_users(users)
+        print("You have registered successfully!")
 
     def login(self):
         email = input("Enter email address: ")
         password = input("Enter password: ")
 
-        auth = password.encode()
-        auth_hash = hashlib.md5(auth).hexdigest()
-        with open("credentials.txt", "r") as f:
-            stored_email, stored_pwd = f.read().split("\n")
-        f.close()
+        users = User.load_users()
+        hash1 = User.hash_password(password)
+        for user in users:
+            if user["email"] == email and user["password_hash"] == hash1:
+                print("Logged in Successfully!")
+                return
+        print("Login failed!\n")
 
-        if email == stored_email and auth_hash == stored_pwd:
-            print("Logged in Successfully!")
-        else:
-            print("Login failed! \n")
-
-    while 1:
-        print("********** Login System **********")
-        print("1.Signup")
-        print("2.Login")
-        print("3.Exit")
-        ch = int(input("Enter your choice: "))
-        if ch == 1:
-            signup(self)
-        elif ch == 2:
-            login(self)
-        elif ch == 3:
-            break
-        else:
-            print("Wrong Choice!")
+while True:
+    print("********** Login System **********")
+    print("1.Signup")
+    print("2.Login")
+    print("3.Exit")
+    ch = int(input("Enter your choice: "))
+    if ch == 1:
+        u = User("John", "Doe", "email@domain.com", 21, "M")
+        u.signup()
+    elif ch == 2:
+        u = User("", "", "", "", "")
+        u.login()
+    elif ch == 3:
+        break
+    else:
+        print("Wrong Choice!")
