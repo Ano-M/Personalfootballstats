@@ -1,0 +1,21 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 300px;
+    background-color: #111;
+    color: white;
+    font-size: 25px;
+    font-weight: 600;
+  }
+  
+  .navbar-left {
+    cursor: pointer;
+  }
+  
+  .navbar-right {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
