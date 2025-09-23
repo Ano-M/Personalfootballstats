@@ -17,6 +17,76 @@
     margin: 0;
     padding: 0;
   }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 200px;
+    background-color: #111;
+    font-size: 25px;
+    font-weight: 600;
+  }
+  
+  .navbar-left {
+    cursor: pointer;
+  }
+  
+  .navbar-right {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .player-card {
+    display: flex;
+    align-items: flex-start;
+    background-color: #ff0000;
+    padding: 16px;
+    border-radius: 1rem;
+    width: 40vw;
+    max-width: 50vw;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  
+  .player-image {
+    width: 115px;
+    height: 115px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 16px;
+  }
+  
+  .player-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .player-name {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .player-club {
+    font-size: 20px;
+    margin: 4px 0 12px 0;
+  }
+
+  .player-meta {
+    display: flex;
+    gap: 20px 20px;
+    padding-left: 0px;
+    padding-top: 20px;
+    font-size: 14px;
+  }
+  
+  .player-meta p {
+    margin: 2px 0;
+    font-size: 14px;
+  }
+  
   
   .player-tabs {
     max-width: 800px;

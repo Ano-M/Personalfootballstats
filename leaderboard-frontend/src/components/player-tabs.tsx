@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./dark-theme.css";
+import "../styles/dark-theme.css";
 
 const PlayerTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"stats" | "add">("stats");

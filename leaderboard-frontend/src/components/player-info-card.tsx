@@ -1,5 +1,5 @@
 import React from "react";
-import "./player-info-card.css";
+import "../styles/dark-theme.css";
 
 interface PlayerInfoCardProps {
   name: string;
