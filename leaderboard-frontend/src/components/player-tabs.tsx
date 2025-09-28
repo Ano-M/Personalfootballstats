@@ -32,7 +32,7 @@ const PlayerTabs: React.FC = () => {
 
         {activeTab === "add" && (
           <div className="add-match-tab">
-            <h2>Add Match Statistics</h2>
+            <h2>Add Match Statistics to calculate rating</h2>
 
             {/* Match Info */}
             <div className="form-section">
