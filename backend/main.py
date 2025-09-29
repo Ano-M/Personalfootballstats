@@ -1,4 +1,4 @@
-from stats_submission import StatsSubmission
+from controller.stats_controller import StatsController
 from leaderboard import Leaderboard
 from user import User
 
@@ -23,7 +23,7 @@ while True:
         if not logged_in_user:
             print("Please login first!\n")
             continue
-        sub = StatsSubmission(logged_in_user["email"], "", "", "")
+        sub = StatsController(logged_in_user["email"], "", "", "")
         match_id, goals, assists, date = sub.get_stats()
         print(f"Stats entered: Goals={goals}, Assists={assists}, Date={date}")
     elif ch == 4:

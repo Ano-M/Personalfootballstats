@@ -21,9 +21,7 @@ class StatsSubmission:
             return []
 
     @staticmethod
-    def save_stats(stats):
-        with open("stats.json", "w") as f:
-            json.dump(stats, f, indent=4)
+
 
     def get_stats(self):
         goals = int(input("Enter goals scored: "))
