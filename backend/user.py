@@ -1,4 +1,4 @@
-import hashlib
+import bcrypt
 import json
 import os
 
@@ -15,8 +15,10 @@ class User:
 
     @staticmethod
     def hash_password(password):
-        # Use a better hashing algorithm (bcrypt recommended for production)
-        return hashlib.md5(password.encode()).hexdigest()
+        """Hash password using bcrypt with 12 rounds"""
+        salt = bcrypt.gensalt(rounds=12)
+        hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+        return hashed.decode('utf-8')  # Store as string in JSON
 
     @staticmethod
     def load_users():
@@ -65,10 +67,14 @@ class User:
         password = input("Enter password: ")
 
         users = User.load_users()
-        hash1 = User.hash_password(password)
+
         for user in users:
-            if user["email"] == email and user["password_hash"] == hash1:
-                print("Logged in Successfully!")
-                return user
+            if user["email"] == email:
+                # Use bcrypt to verify password
+                stored_hash = user["password_hash"].encode('utf-8')
+                if bcrypt.checkpw(password.encode('utf-8'), stored_hash):
+                    print("Logged in Successfully!")
+                    return user
+
         print("Login failed!\n")
         return None
