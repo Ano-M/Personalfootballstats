@@ -1,1 +1,25 @@
-[]
+[
+    {
+        "match_id": 1,
+        "user_email": "anomaphosa@gmail.com",
+        "date": "2025-12-25",
+        "home_team": "Zeeburgia",
+        "away_team": "Ajax",
+        "match_score": "2-1",
+        "minutes_played": 5,
+        "goals": 0,
+        "shots": 1,
+        "disallowed_goals": 0,
+        "goal_involvements": 1,
+        "assists": 1,
+        "passes": 1,
+        "successful_passes": 1,
+        "dribbles": 1,
+        "successful_dribbles": 1,
+        "tackles": 1,
+        "missed_tackles": 1,
+        "interceptions": 1,
+        "touches": 1,
+        "unsuccessful_touches": 1
+    }
+]

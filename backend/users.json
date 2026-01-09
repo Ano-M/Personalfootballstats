@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "anomaphosa@gmail.com",
+        "age": 21,
+        "gender": "M",
+        "password_hash": "$2b$12$gIrmYM.oqBvzRH8cMMh8POvys5RzXqcZYIMIAAYNSyPioWAsf8jZO"
+    }
+]
