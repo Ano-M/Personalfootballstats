@@ -21,5 +21,28 @@
         "interceptions": 1,
         "touches": 1,
         "unsuccessful_touches": 1
+    },
+    {
+        "match_id": 2,
+        "user_email": "testuser@example.com",
+        "date": "2025-12-30",
+        "home_team": "Manchester United",
+        "away_team": "Liverpool",
+        "match_score": "3-2",
+        "minutes_played": 90,
+        "goals": 2,
+        "shots": 8,
+        "disallowed_goals": 0,
+        "goal_involvements": 3,
+        "assists": 1,
+        "passes": 45,
+        "successful_passes": 38,
+        "dribbles": 10,
+        "successful_dribbles": 7,
+        "tackles": 5,
+        "missed_tackles": 2,
+        "interceptions": 3,
+        "touches": 65,
+        "unsuccessful_touches": 8
     }
 ]
