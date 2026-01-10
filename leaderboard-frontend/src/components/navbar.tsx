@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav className="navbar">
-        <div className="navbar-left">anostat</div>
+        <div className="navbar-left">AnoStat</div>
         <div className="navbar-right">
           {isAuthenticated ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
@@ -59,8 +59,8 @@ const Navbar: React.FC = () => {
 
       {/* Auth Modal */}
       {showAuthModal && (
-        <div className="modal-overlay" onClick={handleCloseModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-overlay" onMouseDown={handleCloseModal}>
+          <div className="modal-content" onMouseDown={(e) => e.stopPropagation()}>
             <button className="modal-close" onClick={handleCloseModal}>×</button>
             {authMode === 'login' ? (
               <LoginForm

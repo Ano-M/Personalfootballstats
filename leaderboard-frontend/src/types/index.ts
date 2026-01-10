@@ -20,6 +20,7 @@ export interface SignupData {
   age: number;
   gender: string;
   password: string;
+  confirm_password: string;
 }
 
 export interface MatchStats {
@@ -33,7 +34,7 @@ export interface MatchStats {
   goals: number;
   shots: number;
   disallowed_goals: number;
-  goal_involvements: number;
+  goal_involvements?: number; // Calculated automatically on backend (goals + assists)
   assists: number;
   passes: number;
   successful_passes: number;

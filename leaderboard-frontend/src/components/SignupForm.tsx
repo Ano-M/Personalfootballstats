@@ -15,8 +15,8 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin }) => {
     age: 18,
     gender: 'M',
     password: '',
+    confirm_password: '',
   });
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin }) => {
       return;
     }
 
-    if (formData.password !== confirmPassword) {
+    if (formData.password !== formData.confirm_password) {
       setError('Passwords do not match');
       setLoading(false);
       return;
@@ -173,8 +173,9 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin }) => {
           <input
             type="password"
             id="confirm_password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            name="confirm_password"
+            value={formData.confirm_password}
+            onChange={handleChange}
             placeholder="Re-enter password"
             disabled={loading}
             required

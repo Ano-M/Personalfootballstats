@@ -22,7 +22,7 @@ class Config:
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)  # Refresh token expires in 30 days
 
     # CORS settings
-    CORS_ORIGINS = os.getenv('CORS_ORIGINS', 'http://localhost:3000').split(',')
+    CORS_ORIGINS = os.getenv('CORS_ORIGINS', 'http://localhost:5173,http://localhost:3000').split(',')
     CORS_SUPPORTS_CREDENTIALS = True
 
     # File paths

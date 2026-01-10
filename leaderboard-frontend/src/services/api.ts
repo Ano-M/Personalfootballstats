@@ -31,10 +31,15 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
-    // Handle 401 unauthorized - clear token and redirect to login
+    // Handle 401 unauthorized - only redirect if user was logged in (has token)
+    // Don't redirect on login/signup failures
     if (error.response?.status === 401) {
-      localStorage.removeItem('auth_token');
-      window.location.href = '/';
+      const token = localStorage.getItem('auth_token');
+      if (token) {
+        // User was logged in but token expired/invalid - clear and redirect
+        localStorage.removeItem('auth_token');
+        window.location.href = '/';
+      }
     }
     return Promise.reject(error);
   }
@@ -119,7 +124,7 @@ export const api = {
     getLeaderboard: async (): Promise<LeaderboardEntry[]> => {
       try {
         const response = await apiClient.get('/api/stats/leaderboard');
-        return response.data;
+        return response.data.leaderboard || [];
       } catch (error) {
         throw new Error(handleApiError(error));
       }
@@ -128,7 +133,31 @@ export const api = {
     getMatch: async (matchId: number): Promise<MatchDetail> => {
       try {
         const response = await apiClient.get(`/api/stats/match/${matchId}`);
-        return response.data;
+        // Flatten the nested response into MatchDetail format
+        const data = response.data;
+        return {
+          match_id: data.match.match_id,
+          date: data.match.date,
+          home_team: data.match.home_team,
+          away_team: data.match.away_team,
+          match_score: data.match.match_score,
+          minutes_played: data.match.minutes_played,
+          rating: data.match.rating,
+          goals: data.attacking.goals,
+          shots: data.attacking.shots,
+          disallowed_goals: data.attacking.disallowed_goals,
+          goal_involvements: data.attacking.goal_involvements,
+          assists: data.attacking.assists,
+          passes: data.passing.passes,
+          successful_passes: data.passing.successful_passes,
+          dribbles: data.dribbling.dribbles,
+          successful_dribbles: data.dribbling.successful_dribbles,
+          tackles: data.defensive.tackles,
+          missed_tackles: data.defensive.missed_tackles,
+          interceptions: data.defensive.interceptions,
+          touches: data.ball_control.touches,
+          unsuccessful_touches: data.ball_control.unsuccessful_touches,
+        };
       } catch (error) {
         throw new Error(handleApiError(error));
       }
