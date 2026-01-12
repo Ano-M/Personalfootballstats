@@ -44,5 +44,28 @@
         "interceptions": 3,
         "touches": 65,
         "unsuccessful_touches": 8
+    },
+    {
+        "match_id": 3,
+        "user_email": "anomaphosa@gmail.com",
+        "date": "2026-01-10",
+        "home_team": "Test",
+        "away_team": "Test",
+        "match_score": "2-1",
+        "minutes_played": 90,
+        "goals": 3,
+        "shots": 4,
+        "disallowed_goals": 1,
+        "goal_involvements": 7,
+        "assists": 2,
+        "passes": 5,
+        "successful_passes": 4,
+        "dribbles": 5,
+        "successful_dribbles": 4,
+        "tackles": 5,
+        "missed_tackles": 1,
+        "interceptions": 1,
+        "touches": 5,
+        "unsuccessful_touches": 4
     }
 ]

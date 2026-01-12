@@ -81,7 +81,7 @@ class Leaderboard:
                 f"{entry['goals']:<2} | "
                 f"{entry['assists']:<2} | "
                 f"{entry['minutes']:<4} | "
-                f"{entry['rating']:<6.2f}"
+                f"{entry['rating']:<6.1f}"
             )
 
         print(f"{'='*90}\n")
@@ -93,10 +93,10 @@ class Leaderboard:
 
         print("SUMMARY STATISTICS:")
         print(f"  Total Matches: {len(leaderboard)}")
-        print(f"  Average Rating: {avg_rating:.2f}")
+        print(f"  Average Rating: {avg_rating:.1f}")
         print(f"  Total Goals: {total_goals}")
         print(f"  Total Assists: {total_assists}")
-        print(f"  Best Performance: {leaderboard[0]['rating']:.2f} (Match ID: {leaderboard[0]['match_id']})")
+        print(f"  Best Performance: {leaderboard[0]['rating']:.1f} (Match ID: {leaderboard[0]['match_id']})")
         print()
 
     @staticmethod
@@ -124,7 +124,7 @@ class Leaderboard:
         print(f"Match: {stats.get('home_team', 'N/A')} vs {stats.get('away_team', 'N/A')}")
         print(f"Score: {stats.get('match_score', 'N/A')}")
         print(f"Minutes Played: {stats.get('minutes_played', 'N/A')}")
-        print(f"Performance Rating: {match['rating']:.2f}/100")
+        print(f"Performance Rating: {match['rating']:.1f}/10")
         print(f"{'-'*60}")
 
         print("\nATTACKING:")

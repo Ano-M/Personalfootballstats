@@ -113,13 +113,13 @@ if __name__ == '__main__':
     debug = os.getenv('FLASK_ENV', 'development') == 'development'
 
     print("\n" + "="*60)
-    print("🚀 Football Stats Leaderboard API")
+    print("Football Stats Leaderboard API")
     print("="*60)
-    print(f"🌐 Running on: http://{host}:{port}")
-    print(f"📝 Environment: {os.getenv('FLASK_ENV', 'development')}")
-    print(f"🔧 Debug mode: {debug}")
+    print(f"Running on: http://{host}:{port}")
+    print(f"Environment: {os.getenv('FLASK_ENV', 'development')}")
+    print(f"Debug mode: {debug}")
     print("="*60)
-    print("\n📚 Available endpoints:")
+    print("\nAvailable endpoints:")
     print("  Auth:")
     print("    POST   /api/auth/signup")
     print("    POST   /api/auth/login")

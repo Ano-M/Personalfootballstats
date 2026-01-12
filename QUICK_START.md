@@ -46,7 +46,6 @@ curl -X POST http://localhost:5000/api/stats/submit \
     "goals": 2,
     "shots": 8,
     "disallowed_goals": 0,
-    "goal_involvements": 3,
     "assists": 1,
     "passes": 45,
     "successful_passes": 38,
@@ -92,8 +91,8 @@ Password: (use your original password)
 
 ✅ JWT authentication
 ✅ All 6 endpoints tested
-✅ Input validation (18 fields)
+✅ Input validation (17 fields - goal_involvements calculated automatically)
 ✅ Protected routes
-✅ Rating calculation
+✅ Rating calculation (0-10 scale)
 ✅ CORS for React frontend
 ✅ Original data preserved

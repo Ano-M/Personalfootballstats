@@ -249,7 +249,7 @@ Authorization: Bearer <access_token>
 Content-Type: application/json
 ```
 
-**Request Body (All 18 Fields):**
+**Request Body (17 Fields):**
 ```json
 {
   "date": "2025-12-30",
@@ -260,7 +260,6 @@ Content-Type: application/json
   "goals": 2,
   "shots": 8,
   "disallowed_goals": 0,
-  "goal_involvements": 3,
   "assists": 1,
   "passes": 45,
   "successful_passes": 38,
@@ -274,12 +273,14 @@ Content-Type: application/json
 }
 ```
 
+**Note:** `goal_involvements` is calculated automatically as `goals + assists` and does not need to be included in the request.
+
 **Response (201):**
 ```json
 {
   "message": "Statistics submitted successfully",
   "match_id": 1,
-  "rating": 86.16,
+  "rating": 8.6,
   "stats": {
     "match_id": 1,
     "user_email": "john@example.com",
@@ -290,10 +291,13 @@ Content-Type: application/json
     "minutes_played": 90,
     "goals": 2,
     "shots": 8,
+    "goal_involvements": 3,
     ...
   }
 }
 ```
+
+**Note:** The `rating` is on a 0-10 scale (displayed with 1 decimal place), and `goal_involvements` is included in the response (calculated as goals + assists).
 
 **Curl Example:**
 ```bash
@@ -309,7 +313,6 @@ curl -X POST http://localhost:5000/api/stats/submit \
     "goals": 2,
     "shots": 8,
     "disallowed_goals": 0,
-    "goal_involvements": 3,
     "assists": 1,
     "passes": 45,
     "successful_passes": 38,
@@ -335,8 +338,8 @@ curl -X POST http://localhost:5000/api/stats/submit \
 | `goals` | Integer | 0-15 | Goals scored |
 | `shots` | Integer | 0-30 | Total shots |
 | `disallowed_goals` | Integer | 0-5 | Disallowed goals |
-| `goal_involvements` | Integer | 0-20 | Total goal involvements |
 | `assists` | Integer | 0-15 | Assists given |
+| `goal_involvements` | Integer | Auto | Calculated as `goals + assists` (not required in request) |
 | `passes` | Integer | 0-200 | Total passes |
 | `successful_passes` | Integer | 0-200 | Successful passes |
 | `dribbles` | Integer | 0-50 | Total dribbles |
@@ -352,7 +355,8 @@ curl -X POST http://localhost:5000/api/stats/submit \
 - `successful_dribbles` ≤ `dribbles`
 - `unsuccessful_touches` ≤ `touches`
 - `goals` ≤ `shots`
-- `goal_involvements` ≥ `goals + assists`
+
+**Note:** `goal_involvements` is automatically calculated as `goals + assists`, so no validation is needed.
 
 ---
 
@@ -379,18 +383,18 @@ Authorization: Bearer <access_token>
       "goals": 2,
       "assists": 1,
       "minutes": 90,
-      "rating": 86.16,
+      "rating": 8.6,
       "full_stats": { ... }
     }
   ],
   "summary": {
     "total_matches": 1,
-    "average_rating": 86.16,
+    "average_rating": 8.6,
     "total_goals": 2,
     "total_assists": 1,
     "best_performance": {
       "match_id": 1,
-      "rating": 86.16,
+      "rating": 8.6,
       "date": "2025-12-30"
     }
   }
@@ -426,7 +430,7 @@ Authorization: Bearer <access_token>
     "away_team": "Liverpool",
     "match_score": "3-2",
     "minutes_played": 90,
-    "rating": 86.16
+    "rating": 8.6
   },
   "attacking": {
     "goals": 2,
@@ -490,7 +494,7 @@ Authorization: Bearer <access_token>
       "minutes_played": 90,
       "goals": 2,
       "assists": 1,
-      "rating": 86.16
+      "rating": 8.6
     }
   ],
   "total_count": 1
@@ -612,7 +616,6 @@ curl -X POST "$BASE_URL/api/stats/submit" \
     "goals": 1,
     "shots": 5,
     "disallowed_goals": 0,
-    "goal_involvements": 1,
     "assists": 0,
     "passes": 40,
     "successful_passes": 35,
@@ -641,15 +644,15 @@ chmod +x test_api.sh
 
 ## 📊 Rating System
 
-The performance rating (0-100 scale) is calculated based on:
+The performance rating (0-10 scale, displayed with 1 decimal place) is calculated based on:
 
 ### Components (Maximum Points)
 
 1. **Attacking (40 points)**
    - Goals: 10 points each
    - Assists: 5 points each
-   - Goal involvements: 2 points each
    - Non-goal shots: 0.5 points each
+   - *Note: Goal involvements is calculated automatically (goals + assists) but does not contribute to rating*
 
 2. **Passing (20 points)**
    - Pass completion rate × 20
@@ -667,7 +670,7 @@ The performance rating (0-100 scale) is calculated based on:
 
 ### Normalization
 
-All ratings are normalized to 90 minutes and capped at 100.
+All ratings are normalized to 90 minutes, capped at 100 points, then divided by 10 to get the 0-10 scale.
 
 ---
 

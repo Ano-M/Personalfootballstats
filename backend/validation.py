@@ -219,13 +219,8 @@ class StatsValidator:
                 f"Goals ({stats['goals']}) cannot exceed shots ({stats['shots']})"
             )
 
-        # Goal involvements should be >= goals + assists
-        min_involvements = stats['goals'] + stats['assists']
-        if stats['goal_involvements'] < min_involvements:
-            raise ValidationError(
-                f"Goal involvements ({stats['goal_involvements']}) should be at least "
-                f"goals + assists ({min_involvements})"
-            )
+        # Note: goal_involvements is now calculated automatically as goals + assists
+        # No validation needed since it's always correct
 
 
 def get_validated_input(prompt: str, validator_func, *args, max_attempts: int = 3):

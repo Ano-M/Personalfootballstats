@@ -16,7 +16,6 @@ const PlayerTabs: React.FC = () => {
     goals: 0,
     shots: 0,
     disallowed_goals: 0,
-    goal_involvements: 0,
     assists: 0,
     passes: 0,
     successful_passes: 0,
@@ -103,7 +102,6 @@ const PlayerTabs: React.FC = () => {
         goals: 0,
         shots: 0,
         disallowed_goals: 0,
-        goal_involvements: 0,
         assists: 0,
         passes: 0,
         successful_passes: 0,
@@ -195,7 +193,7 @@ const PlayerTabs: React.FC = () => {
                         <td>{entry.goals}</td>
                         <td>{entry.assists}</td>
                         <td>{entry.minutes}</td>
-                        <td><strong>{entry.rating.toFixed(2)}</strong></td>
+                        <td><strong>{entry.rating.toFixed(1)}</strong></td>
                         <td>
                           <button
                             onClick={() => fetchMatchDetail(entry.match_id)}
@@ -242,7 +240,7 @@ const PlayerTabs: React.FC = () => {
                   <p><strong>Match:</strong> {selectedMatch.home_team} vs {selectedMatch.away_team}</p>
                   <p><strong>Score:</strong> {selectedMatch.match_score}</p>
                   <p><strong>Minutes Played:</strong> {selectedMatch.minutes_played}</p>
-                  <p><strong>Performance Rating:</strong> {selectedMatch.rating.toFixed(2)}/100</p>
+                  <p><strong>Performance Rating:</strong> {selectedMatch.rating.toFixed(1)}/10</p>
                 </div>
 
                 <hr />
@@ -415,18 +413,6 @@ const PlayerTabs: React.FC = () => {
                       min="0"
                       max="15"
                       value={formValues.assists}
-                      onChange={handleInputChange}
-                      disabled={loading}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="goal_involvements">Goal Involvements (0-20)</label>
-                    <input
-                      id="goal_involvements"
-                      type="number"
-                      min="0"
-                      max="20"
-                      value={formValues.goal_involvements}
                       onChange={handleInputChange}
                       disabled={loading}
                     />

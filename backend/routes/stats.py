@@ -24,7 +24,7 @@ def submit_stats():
     Headers:
         Authorization: Bearer <access_token>
 
-    Expected JSON body (all 18 fields):
+    Expected JSON body (17 fields):
     {
         "date": "YYYY-MM-DD",
         "home_team": "string",
@@ -34,7 +34,6 @@ def submit_stats():
         "goals": 0-15,
         "shots": 0-30,
         "disallowed_goals": 0-5,
-        "goal_involvements": 0-20,
         "assists": 0-15,
         "passes": 0-200,
         "successful_passes": 0-200,
@@ -46,6 +45,8 @@ def submit_stats():
         "touches": 0-300,
         "unsuccessful_touches": 0-300
     }
+    
+    Note: goal_involvements is calculated automatically as goals + assists
 
     Returns:
         201: Stats submitted successfully
@@ -59,11 +60,11 @@ def submit_stats():
 
         data = request.get_json()
 
-        # Define required fields (all 18 stats fields)
+        # Define required fields (17 stats fields - goal_involvements calculated automatically)
         required_fields = [
             'date', 'home_team', 'away_team', 'match_score',
             'minutes_played', 'goals', 'shots', 'disallowed_goals',
-            'goal_involvements', 'assists', 'passes', 'successful_passes',
+            'assists', 'passes', 'successful_passes',
             'dribbles', 'successful_dribbles', 'tackles', 'missed_tackles',
             'interceptions', 'touches', 'unsuccessful_touches'
         ]
@@ -93,7 +94,6 @@ def submit_stats():
             goals = StatsValidator.validate_stat_field(str(data['goals']), 'goals')
             shots = StatsValidator.validate_stat_field(str(data['shots']), 'shots')
             disallowed_goals = StatsValidator.validate_stat_field(str(data['disallowed_goals']), 'disallowed_goals')
-            goal_involvements = StatsValidator.validate_stat_field(str(data['goal_involvements']), 'goal_involvements')
             assists = StatsValidator.validate_stat_field(str(data['assists']), 'assists')
             passes = StatsValidator.validate_stat_field(str(data['passes']), 'passes')
             successful_passes = StatsValidator.validate_stat_field(str(data['successful_passes']), 'successful_passes')
@@ -104,6 +104,9 @@ def submit_stats():
             interceptions = StatsValidator.validate_stat_field(str(data['interceptions']), 'interceptions')
             touches = StatsValidator.validate_stat_field(str(data['touches']), 'touches')
             unsuccessful_touches = StatsValidator.validate_stat_field(str(data['unsuccessful_touches']), 'unsuccessful_touches')
+
+            # Calculate goal_involvements automatically as goals + assists
+            goal_involvements = goals + assists
 
             # Create stats dictionary for cross-field validation
             stats_dict = {
@@ -304,7 +307,7 @@ def get_match_details(match_id):
                 'shots': match['shots'],
                 'disallowed_goals': match['disallowed_goals'],
                 'assists': match['assists'],
-                'goal_involvements': match['goal_involvements']
+                'goal_involvements': match.get('goal_involvements', match['goals'] + match['assists'])
             },
             'passing': {
                 'passes': match['passes'],

@@ -108,11 +108,9 @@ class StatsController:
                 'assists'
             )
 
-            goal_involvements = get_validated_input(
-                "Enter goal involvements (0-20): ",
-                StatsValidator.validate_stat_field,
-                'goal_involvements'
-            )
+            # Calculate goal_involvements automatically as goals + assists
+            goal_involvements = goals + assists
+            print(f"Goal Involvements: {goal_involvements} (calculated: goals + assists)")
 
             # === SECTION 3: Passing Statistics ===
             print("\n--- PASSING STATISTICS ---")
@@ -253,7 +251,7 @@ class StatsController:
         Compute comprehensive performance rating.
 
         Enhanced algorithm that considers:
-        - Attacking: goals, assists, shots, goal involvements
+        - Attacking: goals, assists, shots
         - Passing: pass completion rate
         - Dribbling: dribble success rate
         - Defending: tackles, interceptions
@@ -264,13 +262,12 @@ class StatsController:
             stat: Statistics dictionary
 
         Returns:
-            Performance rating (0-100 scale)
+            Performance rating (0-10 scale, 1 decimal place)
         """
         # Extract values with defaults
         goals = int(stat.get("goals", 0))
         assists = int(stat.get("assists", 0))
         shots = int(stat.get("shots", 0))
-        goal_involvements = int(stat.get("goal_involvements", 0))
 
         passes = int(stat.get("passes", 0))
         successful_passes = int(stat.get("successful_passes", 0))
@@ -290,7 +287,6 @@ class StatsController:
         attacking_score = (
             goals * 10 +                    # Goals: 10 points each
             assists * 5 +                   # Assists: 5 points each
-            goal_involvements * 2 +         # Goal involvements: 2 points each
             (shots - goals) * 0.5           # Non-goal shots: 0.5 points each
         )
 
@@ -340,7 +336,8 @@ class StatsController:
         else:
             normalized_score = raw_score
 
-        # Cap at 100
-        final_rating = min(normalized_score, 100)
+        # Cap at 100, then convert to 0-10 scale
+        capped_score = min(normalized_score, 100)
+        final_rating = capped_score / 10.0
 
-        return round(final_rating, 2)
+        return round(final_rating, 1)

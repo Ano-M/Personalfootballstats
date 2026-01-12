@@ -54,7 +54,7 @@ const PlayerInfoCard: React.FC = () => {
   if (!isAuthenticated) {
     return (
       <div className="player-card" style={{ background: 'var(--card)', maxWidth: '800px', margin: '2rem auto' }}>
-        <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <div style={{ padding: '2rem', textAlign: 'center', width: '730px' }}>
           <h2>Welcome to AnoStat</h2>
           <p>Please sign in to view your stats and track your football performance</p>
         </div>
